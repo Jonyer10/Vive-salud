@@ -1,0 +1,1 @@
+export const ESTADOS_CITA = ['PENDIENTE', 'COMPLETADA', 'CANCELADA'];
