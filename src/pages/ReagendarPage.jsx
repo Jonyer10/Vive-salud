@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useAppointment } from "../context/AppointmentContext";
+import { useAppointment } from "../context/AppointmentContextContext";
 
 const ReagendarPage = ({ citaId }) => {
   const { rescheduleAppointment, error } = useAppointment();

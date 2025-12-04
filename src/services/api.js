@@ -40,12 +40,14 @@ const api = {
   cancelAppointment: async (id) => {
     return exponentialBackoff(async () => {
       // Simulación de cancelación
+      if (!id) throw new Error('ID requerido');
       return true;
     });
   },
   rescheduleAppointment: async (id, fecha, hora) => {
     return exponentialBackoff(async () => {
       // Simulación de reagendamiento
+      if (!id || !fecha || !hora) throw new Error('Datos requeridos');
       return true;
     });
   },

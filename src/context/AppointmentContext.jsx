@@ -1,7 +1,9 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { useState } from "react";
 import api from "../services/api";
-
-const AppointmentContext = createContext();
+import {
+  AppointmentContext,
+  useAppointment,
+} from "./AppointmentContextContext";
 
 export const AppointmentProvider = ({ children }) => {
   const [appointments, setAppointments] = useState([]);
@@ -60,5 +62,3 @@ export const AppointmentProvider = ({ children }) => {
     </AppointmentContext.Provider>
   );
 };
-
-export const useAppointment = () => useContext(AppointmentContext);

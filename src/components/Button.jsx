@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppointment } from "../context/AppointmentContext";
+import { useAppointment } from "../context/AppointmentContextContext";
 
 const Button = ({ tipo, citaId }) => {
   const { cancelAppointment, openReschedule } = useAppointment();
