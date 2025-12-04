@@ -1,15 +1,17 @@
-import React from 'react';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useAuth } from '../context/AuthContext';
+import React from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useAuth } from "../context/AuthContext";
 
 const LoginPage = () => {
   const { login, error } = useAuth();
   const formik = useFormik({
-    initialValues: { email: '', password: '' },
+    initialValues: { email: "", password: "" },
     validationSchema: Yup.object({
-      email: Yup.string().email('Email inválido').required('Requerido'),
-      password: Yup.string().min(8, 'Mínimo 8 caracteres').required('Requerido'),
+      email: Yup.string().email("Email inválido").required("Requerido"),
+      password: Yup.string()
+        .min(8, "Mínimo 8 caracteres")
+        .required("Requerido"),
     }),
     onSubmit: (values) => {
       login(values.email, values.password);
@@ -18,7 +20,10 @@ const LoginPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <form onSubmit={formik.handleSubmit} className="bg-white p-6 rounded shadow-md w-80">
+      <form
+        onSubmit={formik.handleSubmit}
+        className="bg-white p-6 rounded shadow-md w-80"
+      >
         <h2 className="text-2xl mb-4 font-bold text-center">Iniciar sesión</h2>
         <input
           name="email"
@@ -42,7 +47,12 @@ const LoginPage = () => {
         {formik.touched.password && formik.errors.password && (
           <div className="text-red-500 text-sm">{formik.errors.password}</div>
         )}
-        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded mt-4">Entrar</button>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 rounded mt-4"
+        >
+          Entrar
+        </button>
         {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
       </form>
     </div>

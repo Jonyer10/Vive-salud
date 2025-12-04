@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
-import api from '../services/api';
+import React, { createContext, useContext, useState } from "react";
+import api from "../services/api";
 
 const AppointmentContext = createContext();
 
@@ -44,7 +44,18 @@ export const AppointmentProvider = ({ children }) => {
   };
 
   return (
-    <AppointmentContext.Provider value={{ appointments, loading, error, fetchAppointments, cancelAppointment, openReschedule, rescheduleAppointment, rescheduleId }}>
+    <AppointmentContext.Provider
+      value={{
+        appointments,
+        loading,
+        error,
+        fetchAppointments,
+        cancelAppointment,
+        openReschedule,
+        rescheduleAppointment,
+        rescheduleId,
+      }}
+    >
       {children}
     </AppointmentContext.Provider>
   );

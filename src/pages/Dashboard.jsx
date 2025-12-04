@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { useAppointment } from '../context/AppointmentContext';
-import CardCita from '../components/CardCita';
-import Skeleton from '../components/Skeleton';
+import React, { useEffect } from "react";
+import { useAppointment } from "../context/AppointmentContext";
+import CardCita from "../components/CardCita";
+import Skeleton from "../components/Skeleton";
 
 const Dashboard = () => {
   const { appointments, loading, fetchAppointments } = useAppointment();
