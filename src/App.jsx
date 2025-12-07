@@ -4,6 +4,7 @@ import { AppointmentProvider } from "./context/AppointmentContext";
 import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 import ReagendarPage from "./pages/ReagendarPage";
+import PrivateRoute from "./components/PrivateRoute";
 import {
   BrowserRouter as Router,
   Routes,
@@ -19,8 +20,22 @@ function App() {
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/reagendar/:id" element={<ReagendarPage />} />
+            <Route 
+              path="/dashboard" 
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              } 
+            />
+            <Route 
+              path="/reagendar/:id" 
+              element={
+                <PrivateRoute>
+                  <ReagendarPage />
+                </PrivateRoute>
+              } 
+            />
           </Routes>
         </Router>
       </AppointmentProvider>
