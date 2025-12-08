@@ -15,7 +15,7 @@ export const AppointmentProvider = ({ children }) => {
 
   const fetchAppointments = async () => {
     if (!user) return;
-    
+
     setLoading(true);
     try {
       const data = await api.getAppointments(user.id);

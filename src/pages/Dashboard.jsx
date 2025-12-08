@@ -25,7 +25,11 @@ const Dashboard = () => {
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-bold">Mis Citas</h1>
-            {user && <p className="text-gray-600">Bienvenido, {user.nombre || user.email}</p>}
+            {user && (
+              <p className="text-gray-600">
+                Bienvenido, {user.nombre || user.email}
+              </p>
+            )}
           </div>
           <button
             onClick={handleLogout}
@@ -42,7 +46,7 @@ const Dashboard = () => {
             {error}
           </div>
         )}
-        
+
         {loading ? (
           <Skeleton />
         ) : appointments.length === 0 ? (
