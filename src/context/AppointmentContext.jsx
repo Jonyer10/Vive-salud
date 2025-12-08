@@ -1,20 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import api from "../services/api";
 import {
   AppointmentContext,
   useAppointment,
 } from "./AppointmentContextContext";
+import { useAuth } from "./AuthContext";
 
 export const AppointmentProvider = ({ children }) => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [rescheduleId, setRescheduleId] = useState(null);
+  const { user } = useAuth();
 
   const fetchAppointments = async () => {
+    if (!user) return;
+    
     setLoading(true);
     try {
-      const data = await api.getAppointments();
+      const data = await api.getAppointments(user.id);
       setAppointments(data);
       setError(null);
     } catch (err) {
@@ -28,6 +32,7 @@ export const AppointmentProvider = ({ children }) => {
     try {
       await api.cancelAppointment(id);
       setAppointments((prev) => prev.filter((cita) => cita.id !== id));
+      setError(null);
     } catch (err) {
       setError(err.message);
     }
@@ -39,7 +44,8 @@ export const AppointmentProvider = ({ children }) => {
     try {
       await api.rescheduleAppointment(id, fecha, hora);
       setRescheduleId(null);
-      fetchAppointments();
+      await fetchAppointments();
+      setError(null);
     } catch (err) {
       setError(err.message);
     }
@@ -62,3 +68,5 @@ export const AppointmentProvider = ({ children }) => {
     </AppointmentContext.Provider>
   );
 };
+
+export { useAppointment };

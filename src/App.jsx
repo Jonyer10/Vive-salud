@@ -1,7 +1,7 @@
 import React from "react";
 import { AuthProvider } from "./context/AuthContext";
 import { AppointmentProvider } from "./context/AppointmentContext";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ReagendarPage from "./pages/ReagendarPage";
 import PrivateRoute from "./components/PrivateRoute";
