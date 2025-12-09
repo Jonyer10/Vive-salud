@@ -27,67 +27,71 @@ const ReagendarPage = () => {
   });
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form
-        onSubmit={formik.handleSubmit}
-        className="bg-white p-6 rounded shadow-md w-80"
-      >
-        <h2 className="text-xl mb-4 font-bold">Reagendar Cita</h2>
+    <div className="login-container">
+      <div style={{ maxWidth: "420px", width: "100%" }}>
+        <form onSubmit={formik.handleSubmit} className="login-card">
+          <h2 className="form-title">Reagendar Cita</h2>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Fecha:
-          </label>
-          <input
-            name="fecha"
-            type="date"
-            onChange={formik.handleChange}
-            value={formik.values.fecha}
-            className="w-full p-2 border rounded"
-          />
-          {formik.touched.fecha && formik.errors.fecha && (
-            <div className="text-red-500 text-sm mt-1">
-              {formik.errors.fecha}
-            </div>
-          )}
-        </div>
+          {error && <div className="alert-error">{error}</div>}
 
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Hora:
-          </label>
-          <input
-            name="hora"
-            type="time"
-            onChange={formik.handleChange}
-            value={formik.values.hora}
-            className="w-full p-2 border rounded"
-          />
-          {formik.touched.hora && formik.errors.hora && (
-            <div className="text-red-500 text-sm mt-1">
-              {formik.errors.hora}
-            </div>
-          )}
-        </div>
+          <div className="form-group">
+            <label className="form-label">Fecha</label>
+            <input
+              name="fecha"
+              type="date"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.fecha}
+              className="form-input"
+            />
+            {formik.touched.fecha && formik.errors.fecha && (
+              <div className="text-red-500 text-sm mt-1">
+                {formik.errors.fecha}
+              </div>
+            )}
+          </div>
 
-        <div className="flex gap-2">
+          <div className="form-group">
+            <label className="form-label">Hora</label>
+            <input
+              name="hora"
+              type="time"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.hora}
+              className="form-input"
+            />
+            {formik.touched.hora && formik.errors.hora && (
+              <div className="text-red-500 text-sm mt-1">
+                {formik.errors.hora}
+              </div>
+            )}
+          </div>
+
+          <div style={{ display: "flex", gap: "0.75rem", marginTop: "0.5rem" }}>
+            <button
+              type="button"
+              onClick={() => navigate("/dashboard")}
+              className="btn-form-secondary"
+            >
+              Cancelar
+            </button>
+            <button type="submit" className="btn-form-primary">
+              Reagendar
+            </button>
+          </div>
+        </form>
+
+        <div className="register-banner">
+          <span className="register-banner-text">¿Necesitas ayuda?</span>
           <button
-            type="button"
+            className="register-banner-button"
             onClick={() => navigate("/dashboard")}
-            className="flex-1 bg-gray-500 text-white py-2 rounded hover:bg-gray-600"
           >
-            Cancelar
-          </button>
-          <button
-            type="submit"
-            className="flex-1 bg-green-500 text-white py-2 rounded hover:bg-green-600"
-          >
-            Reagendar
+            Volver al inicio
           </button>
         </div>
-
-        {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
-      </form>
+      </div>
     </div>
   );
 };

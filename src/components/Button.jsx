@@ -17,16 +17,17 @@ const Button = ({ tipo, citaId }) => {
     }
   };
 
+  if (tipo === "reschedule") {
+    return (
+      <button onClick={handleClick} className="btn-primary">
+        Agendar
+      </button>
+    );
+  }
+
   return (
-    <button
-      onClick={handleClick}
-      className={`px-4 py-2 rounded text-white hover:opacity-90 ${
-        tipo === "cancel"
-          ? "bg-red-500 hover:bg-red-600"
-          : "bg-blue-500 hover:bg-blue-600"
-      }`}
-    >
-      {tipo === "cancel" ? "Cancelar" : "Reagendar"}
+    <button onClick={handleClick} className="btn-secondary">
+      Cancelar
     </button>
   );
 };

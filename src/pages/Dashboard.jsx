@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppointment } from "../context/AppointmentContextContext";
 import { useAuth } from "../context/AuthContext";
@@ -9,6 +9,8 @@ const Dashboard = () => {
   const { appointments, loading, fetchAppointments, error } = useAppointment();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState("servicios");
+  const [sortBy, setSortBy] = useState("recientes");
 
   useEffect(() => {
     fetchAppointments();
@@ -19,48 +21,92 @@ const Dashboard = () => {
     navigate("/login");
   };
 
+  const sortedAppointments = [...appointments].sort((a, b) => {
+    if (sortBy === "recientes") {
+      return new Date(b.fecha) - new Date(a.fecha);
+    }
+    return new Date(a.fecha) - new Date(b.fecha);
+  });
+
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="bg-white shadow-md p-4 mb-6">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold">Mis Citas</h1>
-            {user && (
-              <p className="text-gray-600">
-                Bienvenido, {user.nombre || user.email}
-              </p>
-            )}
+    <div className="app-background">
+      {/* Header */}
+      <header className="header-nav">
+        <div className="container-main">
+          <div className="flex justify-between items-center h-16">
+            {/* Left: Logo + Tabs */}
+            <div className="flex items-center space-x-8">
+              <h1 className="text-title">Vive Salud</h1>
+              <nav className="flex space-x-1">
+                <button
+                  onClick={() => setActiveTab("servicios")}
+                  className={`nav-tab ${
+                    activeTab === "servicios"
+                      ? "nav-tab-active"
+                      : "nav-tab-inactive"
+                  }`}
+                >
+                  Servicios
+                </button>
+                <button
+                  onClick={() => setActiveTab("doctores")}
+                  className={`nav-tab ${
+                    activeTab === "doctores"
+                      ? "nav-tab-active"
+                      : "nav-tab-inactive"
+                  }`}
+                >
+                  Doctores
+                </button>
+              </nav>
+            </div>
+            {/* Right: Logout */}
+            <button onClick={handleLogout} className="btn-secondary">
+              Cerrar Sesión
+            </button>
           </div>
-          <button
-            onClick={handleLogout}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-          >
-            Cerrar Sesión
-          </button>
+        </div>
+      </header>
+
+      {/* Filter Bar */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="container-main py-3">
+          <div className="flex justify-end items-center">
+            <div className="flex items-center space-x-3">
+              <span className="text-body font-medium">Organizar</span>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="select-custom"
+              >
+                <option value="recientes">Más antiguos</option>
+                <option value="antiguos">Más recientes</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto p-6">
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            {error}
-          </div>
-        )}
+      {/* Content */}
+      <main className="container-main spacing-section">
+        {/* Error Message */}
+        {error && <div className="alert-error">{error}</div>}
 
+        {/* Content Area */}
         {loading ? (
           <Skeleton />
-        ) : appointments.length === 0 ? (
-          <div className="bg-white p-8 rounded shadow text-center">
-            <p className="text-gray-500 text-lg">No tienes citas agendadas</p>
+        ) : sortedAppointments.length === 0 ? (
+          <div className="empty-state">
+            <p className="text-body">No tienes citas agendadas</p>
           </div>
         ) : (
-          <div className="grid gap-4">
-            {appointments.map((cita) => (
+          <div className="bg-white rounded-lg overflow-hidden border border-gray-200">
+            {sortedAppointments.map((cita) => (
               <CardCita key={cita.id} cita={cita} />
             ))}
           </div>
         )}
-      </div>
+      </main>
     </div>
   );
 };
